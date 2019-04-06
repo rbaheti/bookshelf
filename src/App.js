@@ -21,6 +21,33 @@ class BooksApp extends React.Component {
       .then(data => this.setState({allBooks: data}));
   }
 
+  handleUpdateShelf = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+      .then(data => {
+        const allBooks = this.state.allBooks;
+        allBooks.forEach(d => {
+          let currBookId = "";
+          currBookId = data.currentlyReading.find(a => a === d.id);
+          if (currBookId !== undefined) {
+            d.shelf = "currentlyReading";
+            return;
+          }
+          currBookId = data.wantToRead.find(a => a === d.id);
+          if (currBookId !== undefined) {
+            d.shelf = "wantToRead";
+            return;
+          }
+          currBookId = data.read.find(a => a === d.id);
+          if (currBookId !== undefined) {
+            d.shelf = "read";
+            return;
+          }
+          d.shelf = "none";
+        });
+        this.setState({allBooks});
+      });
+  }
+
   render() {
     const {allBooks} = this.state;
     console.log("all books: ", allBooks);
@@ -60,7 +87,7 @@ class BooksApp extends React.Component {
                       <h2 className="bookshelf-title">Currently Reading</h2>
                       <div className="bookshelf-books">
                         <ol className="books-grid">
-                          {allBooks.map(book => book.shelf === "currentlyReading" ? <li key={book.id}><Book book={book}/> </li>  : null)}
+                          {allBooks.map(book => book.shelf === "currentlyReading" ? <li key={book.id}><Book book={book} updateShelf={(book, shelf) => this.handleUpdateShelf(book, shelf)}/> </li>  : null)}
                         </ol>
                       </div>
                     </div>
@@ -68,7 +95,7 @@ class BooksApp extends React.Component {
                       <h2 className="bookshelf-title">Want to Read</h2>
                       <div className="bookshelf-books">
                         <ol className="books-grid">
-                          {allBooks.map(book => book.shelf === "wantToRead" ? <li key={book.id}><Book book={book}/> </li>  : null)}
+                          {allBooks.map(book => book.shelf === "wantToRead" ? <li key={book.id}><Book book={book} updateShelf={(book, shelf) => this.handleUpdateShelf(book, shelf)}/> </li>  : null)}
                         </ol>
                       </div>
                     </div>
@@ -76,7 +103,7 @@ class BooksApp extends React.Component {
                       <h2 className="bookshelf-title">Read</h2>
                       <div className="bookshelf-books">
                         <ol className="books-grid">
-                          {allBooks.map(book => book.shelf === "read" ? <li key={book.id}><Book book={book}/> </li>  : null)}
+                          {allBooks.map(book => book.shelf === "read" ? <li key={book.id}><Book book={book} updateShelf={(book, shelf) => this.handleUpdateShelf(book, shelf)}/> </li>  : null)}
                         </ol>
                       </div>
                     </div>

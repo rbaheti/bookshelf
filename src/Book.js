@@ -5,6 +5,11 @@ class Book extends Component {
     super(props);
   }
 
+  handleChange = e => {
+    e.preventDefault();
+    this.props.updateShelf(this.props.book, e.target.value);
+  }
+
   render() {
     const {book} = this.props;
     const optionsState = book.shelf;
@@ -16,7 +21,7 @@ class Book extends Component {
             <img src={book.imageLinks.thumbnail} style={{maxWidth: "150px", maxHeight: "200px", visibility: "hidden"}}/>
           </div>
           <div className="book-shelf-changer">
-            <select defaultValue={optionsState}>
+            <select defaultValue={optionsState} onChange={this.handleChange}>
               <option value="move" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead" defaultValue="wantToRead">Want to Read</option>
