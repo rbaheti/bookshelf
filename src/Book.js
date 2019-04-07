@@ -12,7 +12,7 @@ class Book extends Component {
 
   render() {
     const {book} = this.props;
-    const optionsState = book.shelf;
+    const optionsState = book.shelf === undefined ? "none" : book.shelf;
 
     return (
       <div className="book">
@@ -31,7 +31,7 @@ class Book extends Component {
           </div>
         </div>
         <div className="book-title">{book.title}</div>
-        {book.authors.map(d => <div className="book-authors" key={d}>{d}</div>)}
+        {book.authors !== undefined ? book.authors.map(d => <div className="book-authors" key={d}>{d}</div>) : null}
       </div>
     );
   }

@@ -1,7 +1,11 @@
-import React from "react";
+import React, {Fragment} from "react";
+import {Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
+
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
 import Book from "./Book";
+import Search from "./Search";
 
 class BooksApp extends React.Component {
   state = {
@@ -13,7 +17,8 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
-    allBooks: []
+    allBooks: [],
+    searchBooks: []
   }
 
   componentDidMount() {
@@ -25,6 +30,7 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, shelf)
       .then(data => {
         const allBooks = this.state.allBooks;
+        if (allBooks.length < data.currentlyReading.length + data.wantToRead.length + data.read.length) allBooks.push(book);
         allBooks.forEach(d => {
           let currBookId = "";
           currBookId = data.currentlyReading.find(a => a === d.id);
@@ -48,6 +54,24 @@ class BooksApp extends React.Component {
       });
   }
 
+  handleSearch = e => {
+    e.preventDefault();
+    this.setState({showSearchPage: true});
+    // return <Redirect to={"/search"} />;
+  }
+
+  handleInput = e => {
+    BooksAPI.search(e.target.value)
+      .then(resp => {
+        if (resp !== undefined && resp.error === undefined) {
+          this.setState({searchBooks: resp});
+        }
+        else {
+          this.setState({searchBooks: []});
+        }
+      });
+  }
+
   render() {
     const {allBooks} = this.state;
     console.log("all books: ", allBooks);
@@ -67,8 +91,19 @@ class BooksApp extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                <input type="text" placeholder="Search by title or author"/>
-
+                <input type="text" placeholder="Search by title or author" onChange={this.handleInput}/>
+                {this.state.searchBooks !== undefined && this.state.searchBooks.length !== 0
+                  ? <div className="list-books-content">
+                    <div>
+                      <div className="bookshelf">
+                        <div className="bookshelf-books">
+                          <ol className="books-grid">
+                            {this.state.searchBooks.map(book => <li key={book.id}><Book book={book} updateShelf={(book, shelf) => this.handleUpdateShelf(book, shelf)}/> </li>)}
+                          </ol>
+                        </div>
+                      </div>
+                    </div>
+                  </div> : null}
               </div>
             </div>
             <div className="search-books-results">
@@ -110,7 +145,7 @@ class BooksApp extends React.Component {
                   </div>
                 </div>
                 <div className="open-search">
-                  <button onClick={() => this.setState({showSearchPage: true})}>Add a book</button>
+                  <button onClick={this.handleSearch}>Add a book</button>
                 </div>
               </div> 
             </div> : null}
