@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import defaultImage from "./icons/defaultImage.jpg";
 
 // Reander a book being passed to this component.
 class Book extends Component {
@@ -11,12 +12,14 @@ class Book extends Component {
   render() {
     const {book} = this.props;
     const optionsState = book.shelf === undefined ? "none" : book.shelf;
+    const image = book.imageLinks.smallThumbnail === undefined ? defaultImage : book.imageLinks.smallThumbnail;
 
     return (
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{backgroundSize: "contain", backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
-            <img alt="book-cover" src={book.imageLinks.thumbnail} style={{maxWidth: "150px", maxHeight: "200px", visibility: "hidden"}}/>
+          <div className="book-cover" style={{backgroundSize: "contain", backgroundImage: `url(${image})`}}>
+            <img alt="book-cover" src={image} style={{maxWidth: "150px", maxHeight: "200px", visibility: "hidden"}}/>
           </div>
           <div className="book-shelf-changer">
             <select defaultValue={optionsState} onChange={this.handleChange}>
