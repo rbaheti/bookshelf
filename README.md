@@ -9,9 +9,9 @@ There is a dropdown option for each book which helps you in moving a book to a d
 By clicking on the add button at the bottom of the page, you can search a particular book.
 If the book is available in the database, you can add it to one of the shelves. Once done, the book will be added to that shelf. To see that change, go back to the home page.
 
-This entire app is build using ReactJS library. 
+This entire app is built using ReactJS library. 
 
-Hope you have fun while using this app!
+Hope you have fun using this app!
 
 ## TL;DR
 
