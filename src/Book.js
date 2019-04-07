@@ -2,9 +2,6 @@ import React, {Component} from "react";
 
 // Reander a book being passed to this component.
 class Book extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   handleChange = e => {
     e.preventDefault();
@@ -19,7 +16,7 @@ class Book extends Component {
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{backgroundSize: "contain", backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
-            <img src={book.imageLinks.thumbnail} style={{maxWidth: "150px", maxHeight: "200px", visibility: "hidden"}}/>
+            <img alt="book-cover" src={book.imageLinks.thumbnail} style={{maxWidth: "150px", maxHeight: "200px", visibility: "hidden"}}/>
           </div>
           <div className="book-shelf-changer">
             <select defaultValue={optionsState} onChange={this.handleChange}>
