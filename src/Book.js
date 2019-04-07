@@ -17,7 +17,6 @@ class Book extends Component {
     return (
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{backgroundSize: "contain", backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
           <div className="book-cover" style={{backgroundSize: "contain", backgroundImage: `url(${image})`}}>
             <img alt="book-cover" src={image} style={{maxWidth: "150px", maxHeight: "200px", visibility: "hidden"}}/>
           </div>
