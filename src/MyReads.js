@@ -66,42 +66,33 @@ class MyReads extends Component {
   render() {
     const {allBooks} = this.state;
 
+    const shelves = [
+      {title: "Currently Reading", slug: "currentlyReading"},
+      {title: "Want To Read", slug: "wantToRead"},
+      {title: "Read", slug: "read"}
+    ];
+
     return (
       <div className="list-books">
         {this.renderRedirectToSearch()}
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
-        {allBooks.length !== 0 
-          ? <div className="list-books-content">
-            <div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Currently Reading</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    {allBooks.map(book => book.shelf === "currentlyReading" ? <li key={book.id}><Book book={book} updateShelf={(book, shelf) => this.handleUpdateShelf(book, shelf)}/> </li>  : null)}
-                  </ol>
-                </div>
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Want to Read</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    {allBooks.map(book => book.shelf === "wantToRead" ? <li key={book.id}><Book book={book} updateShelf={(book, shelf) => this.handleUpdateShelf(book, shelf)}/> </li>  : null)}
-                  </ol>
-                </div>
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Read</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    {allBooks.map(book => book.shelf === "read" ? <li key={book.id}><Book book={book} updateShelf={(book, shelf) => this.handleUpdateShelf(book, shelf)}/> </li>  : null)}
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div> 
-          : null}
+        <div className="list-books-content">
+          {shelves.map(currShelf =>
+            allBooks.length !== 0
+              ? <div key={currShelf.slug}>
+                <div className="bookshelf">
+                  <h2 className="bookshelf-title">{currShelf.title}</h2>
+                  <div className="bookshelf-books">
+                    <ol className="books-grid">
+                      {allBooks.map(book => book.shelf === currShelf.slug ? <li key={book.id}><Book book={book} updateShelf={(book, shelf) => this.handleUpdateShelf(book, shelf)}/> </li>  : null)}
+                    </ol>
+                  </div>
+                </div> 
+              </div> : null
+          )}
+        </div>
         <div className="open-search">
           <button onClick={this.handleSearchButton}>Add a book</button>
         </div>
