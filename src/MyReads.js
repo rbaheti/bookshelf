@@ -4,6 +4,7 @@ import {Redirect} from "react-router-dom";
 import Book from "./Book";
 import * as BooksAPI from "./BooksAPI";
 
+// Render all categories and their respective books under MyReads
 class MyReads extends Component {
 
   state = {
@@ -11,11 +12,13 @@ class MyReads extends Component {
     showSearchPage: false
   }
 
+  // Get all books using the function in BookAPI and set it in the local state
   componentDidMount() {
     BooksAPI.getAll()
       .then(data => this.setState({allBooks: data}));
   }
 
+  // Once the user changes a book shelf, update it with the help of BookAPI's update function and also update the local state.
   handleUpdateShelf = (book, shelf) => {
     BooksAPI.update(book, shelf)
       .then(data => {
@@ -47,11 +50,12 @@ class MyReads extends Component {
       });
   }
 
-  handleSearch = e => {
+  handleSearchButton = e => {
     e.preventDefault();
     this.setState({showSearchPage: true});
   }
 
+  // Redirect page url to "/search" when the add button is clicked
   renderRedirectToSearch = () => {
     if (this.state.showSearchPage) {
       return <Redirect to={"/search"} />;
@@ -99,7 +103,7 @@ class MyReads extends Component {
           </div> 
           : null}
         <div className="open-search">
-          <button onClick={this.handleSearch}>Add a book</button>
+          <button onClick={this.handleSearchButton}>Add a book</button>
         </div>
       </div> 
     );

@@ -4,6 +4,7 @@ import {Redirect} from "react-router-dom";
 import Book from "./Book";
 import * as BooksAPI from "./BooksAPI";
 
+// Render all the books that match the search filter
 class Search extends Component {
 
   state = {
@@ -29,6 +30,7 @@ class Search extends Component {
       });
   }
 
+  // Update shelf when a user updates a book's shelf
   handleUpdateShelf = (book, shelf) => {
     BooksAPI.update(book, shelf)
       .then(data => {
@@ -58,6 +60,7 @@ class Search extends Component {
       });
   }
 
+  // By default, search books do not have a shelf. Populate shelf when a book has been changed to a new shelf.
   populateShelf = book => {
     const findResult = this.state.allBooks.filter(d => d.id === book.id);
     if (findResult.length > 0) {
@@ -66,6 +69,7 @@ class Search extends Component {
     return book;
   };
 
+  // Redirect page to "/" home when a back button is being clicked
   renderRedirectToHome = () => {
     if (!this.state.showSearchPage) {
       return <Redirect to={"/"} />;

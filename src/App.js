@@ -5,6 +5,7 @@ import "./App.css";
 import MyReads from "./MyReads";
 import Search from "./Search";
 
+// Set the home and search paths to their respective components.
 class BooksApp extends React.Component {
   render() {
     return (

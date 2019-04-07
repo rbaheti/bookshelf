@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 
+// Reander a book being passed to this component.
 class Book extends Component {
   constructor(props) {
     super(props);
