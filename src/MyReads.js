@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import Book from "./Book";
 import * as BooksAPI from "./BooksAPI";
@@ -8,8 +8,7 @@ import * as BooksAPI from "./BooksAPI";
 class MyReads extends Component {
 
   state = {
-    allBooks: [],
-    showSearchPage: false
+    allBooks: []
   }
 
   // Get all books using the function in BookAPI and set it in the local state
@@ -26,41 +25,30 @@ class MyReads extends Component {
         if (allBooks.length < data.currentlyReading.length + data.wantToRead.length + data.read.length) {
           allBooks.push(book);
         }
-        
-        allBooks.forEach(d => {
-          let currBookId = "";
-          currBookId = data.currentlyReading.find(a => a === d.id);
-          if (currBookId !== undefined) {
-            d.shelf = "currentlyReading";
-            return;
-          }
-          currBookId = data.wantToRead.find(a => a === d.id);
-          if (currBookId !== undefined) {
-            d.shelf = "wantToRead";
-            return;
-          }
-          currBookId = data.read.find(a => a === d.id);
-          if (currBookId !== undefined) {
-            d.shelf = "read";
-            return;
-          }
-          d.shelf = "none";
+
+        this.setState(prevState => {
+          prevState.allBooks.forEach(d => {
+            let currBookId = "";
+            currBookId = data.currentlyReading.find(a => a === d.id);
+            if (currBookId !== undefined) {
+              d.shelf = "currentlyReading";
+              return;
+            }
+            currBookId = data.wantToRead.find(a => a === d.id);
+            if (currBookId !== undefined) {
+              d.shelf = "wantToRead";
+              return;
+            }
+            currBookId = data.read.find(a => a === d.id);
+            if (currBookId !== undefined) {
+              d.shelf = "read";
+              return;
+            }
+            d.shelf = "none";
+          });
+          return {allBooks: prevState.allBooks};
         });
-        this.setState({allBooks});
       });
-  }
-
-  handleSearchButton = e => {
-    e.preventDefault();
-    this.setState({showSearchPage: true});
-  }
-
-  // Redirect page url to "/search" when the add button is clicked
-  renderRedirectToSearch = () => {
-    if (this.state.showSearchPage) {
-      return <Redirect to={"/search"} />;
-    }
-    return null;
   }
 
   render() {
@@ -74,7 +62,6 @@ class MyReads extends Component {
 
     return (
       <div className="list-books">
-        {this.renderRedirectToSearch()}
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
@@ -94,7 +81,7 @@ class MyReads extends Component {
           )}
         </div>
         <div className="open-search">
-          <button onClick={this.handleSearchButton}>Add a book</button>
+          <Link to="/search"><button>Add a book</button></Link>
         </div>
       </div> 
     );

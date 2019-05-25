@@ -19,4 +19,4 @@ Instructions for installing and launching the project:
 
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
-
+* live link: http://reashmi-myreads.netlify.com
