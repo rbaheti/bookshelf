@@ -1,6 +1,6 @@
-# MyReads Project
+# Bookshelf Project
 
-In this project you will see 3 shelves or categories in which a particular book is. The 3 shelves are:
+In this project, there are 3 shelves or categories in which a particular book can be added. The 3 shelves are:
 a. Currently reading
 b. Want to read
 c. Read
