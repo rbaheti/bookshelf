@@ -2,7 +2,7 @@ import React from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import "./App.css";
-import MyReads from "./MyReads";
+import Bookshelf from "./Bookshelf";
 import Search from "./Search";
 import NoMatch from "./NoMatch";
 
@@ -13,7 +13,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Router>
           <Switch>
-            <Route path="/" exact component={MyReads} />
+            <Route path="/" exact component={Bookshelf} />
             <Route path="/search" exact component={Search} />
             <Route component={NoMatch} />
           </Switch>

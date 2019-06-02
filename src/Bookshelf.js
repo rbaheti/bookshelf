@@ -4,8 +4,8 @@ import {Link} from "react-router-dom";
 import Book from "./Book";
 import * as BooksAPI from "./BooksAPI";
 
-// Render all categories and their respective books under MyReads
-class MyReads extends Component {
+// Render all categories and their respective books under Bookshelf
+class Bookshelf extends Component {
 
   state = {
     allBooks: []
@@ -63,7 +63,7 @@ class MyReads extends Component {
     return (
       <div className="list-books">
         <div className="list-books-title">
-          <h1>MyReads</h1>
+          <h1>Bookshelf</h1>
         </div>
         <div className="list-books-content">
           {shelves.map(currShelf =>
@@ -88,4 +88,4 @@ class MyReads extends Component {
   }
 }
 
-export default MyReads;
+export default Bookshelf;
